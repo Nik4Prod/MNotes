@@ -13,13 +13,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import ua.mykyklymenko.mnotes.model.Note
 import ua.mykyklymenko.mnotes.navigation.NavRoute
 
 @Composable
 fun NoteCard(
-    title: String,
-    subtitle: String,
-    navHostController: NavHostController,
+    note: Note,
+    navHostController: NavHostController
 
 ) {
     Card(
@@ -37,11 +37,11 @@ fun NoteCard(
 
         ) {
             Text(
-                text = title,
+                text = note.title,
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Bold
             )
-            Text(text = subtitle)
+            Text(text = note.subtitle)
         }
 
     }

@@ -22,10 +22,10 @@ import ua.mykyklymenko.mnotes.utils.TYPE_ROOM
 
 
 @Composable
-fun StartScreen(navHostController: NavHostController) {
-    val context = LocalContext.current
-    val mViewModel: MainViewModel =
-        viewModel(factory = MainViewModelFactory(context.applicationContext as Application))
+fun StartScreen(
+    navHostController: NavHostController,
+    mViewModel: MainViewModel
+) {
 
     Scaffold(
         modifier = Modifier
@@ -40,8 +40,9 @@ fun StartScreen(navHostController: NavHostController) {
             Text(text = "What will we use?")
             Button(
                 onClick = {
-                    mViewModel.initDatabase(TYPE_ROOM)
-                    navHostController.navigate(NavRoute.Main.route)
+                    mViewModel.initDatabase(TYPE_ROOM){
+                        navHostController.navigate(NavRoute.Main.route)
+                    }
                 },
                 modifier = Modifier
                     .width(200.dp)
@@ -51,8 +52,9 @@ fun StartScreen(navHostController: NavHostController) {
             }
             Button(
                 onClick = {
-                    mViewModel.initDatabase(TYPE_FIREBASE)
-                    navHostController.navigate(NavRoute.Main.route)
+                    mViewModel.initDatabase(TYPE_FIREBASE){
+                        navHostController.navigate(NavRoute.Main.route)
+                    }
                 },
                 modifier = Modifier
                     .width(200.dp)
@@ -68,5 +70,5 @@ fun StartScreen(navHostController: NavHostController) {
 @Preview
 @Composable
 fun StartPreview() {
-    StartScreen(navHostController = rememberNavController())
+    StartScreen(navHostController = rememberNavController(), viewModel())
 }

@@ -2,47 +2,43 @@ package ua.mykyklymenko.mnotes
 
 import android.app.Application
 import android.util.Log
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import ua.mykyklymenko.mnotes.database.room.AppRoomDatabase
+import ua.mykyklymenko.mnotes.database.room.repository.RoomRepository
 import ua.mykyklymenko.mnotes.model.Note
+import ua.mykyklymenko.mnotes.utils.REPOSITORY
 import ua.mykyklymenko.mnotes.utils.TYPE_DATABASE
 import ua.mykyklymenko.mnotes.utils.TYPE_FIREBASE
 import ua.mykyklymenko.mnotes.utils.TYPE_ROOM
 
 class MainViewModel(application: Application): AndroidViewModel(application) {
 
-    val readTest: MutableLiveData<List<Note>> by lazy {
-        MutableLiveData<List<Note>>()
-    }
+    private val context = application
 
-    val dbType: MutableLiveData<String> by lazy {
-        MutableLiveData<String>(TYPE_ROOM)
-    }
-
-
-    init {
-        readTest.value =
-            when(dbType.value){
-                TYPE_ROOM -> {
-                    listOf<Note>(
-                        Note(title = "Title 1", subtitle = "Subtitle"),
-                        Note(title = "Title 2", subtitle = "Subtitle"),
-                        Note(title = "Title 3", subtitle = "Subtitle"),
-                        Note(title = "Title 4", subtitle = "Subtitle"),
-                        Note(title = "Title 5", subtitle = "Subtitle"),
-                    )
-                }
-                TYPE_FIREBASE -> listOf()
-                else -> listOf()
-            }
-    }
-
-    fun initDatabase(type: String){
-        dbType.value = type
+    fun initDatabase(type: String, onSuccess: ()-> Unit){
         Log.d("check Data", "MainViewModel init database with type: $type")
+        when(type){
+            TYPE_ROOM ->{
+                val dao = AppRoomDatabase.getInstance(context = context).getRoomDao()
+                REPOSITORY = RoomRepository(dao)
+            }
+        }
     }
+
+    fun addNote(note:Note, onSuccess: () -> Unit){
+        viewModelScope.launch(Dispatchers.IO){
+            REPOSITORY.create(note = note){
+                viewModelScope.launch(Dispatchers.Main){
+                    onSuccess()
+                }
+            }
+        }
+    }
+
+    fun radAllNotes() = REPOSITORY.readAll
+
 }
 
 class MainViewModelFactory(private val application: Application): ViewModelProvider.Factory{

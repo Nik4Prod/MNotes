@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import ua.mykyklymenko.mnotes.MainViewModel
 import ua.mykyklymenko.mnotes.screens.AddScreen
 import ua.mykyklymenko.mnotes.screens.MainScreen
 import ua.mykyklymenko.mnotes.screens.NoteScreen
@@ -18,14 +19,14 @@ sealed class NavRoute(val route: String){
 
 
 @Composable
-fun NotesNavHost() {
+fun NotesNavHost(mViewModel: MainViewModel) {
     val navHostController = rememberNavController()
 
     NavHost(navController = navHostController, startDestination = NavRoute.Start.route){
-        composable(NavRoute.Start.route){ StartScreen(navHostController = navHostController) }
-        composable(NavRoute.Main.route){ MainScreen(navHostController = navHostController) }
-        composable(NavRoute.Add.route){ AddScreen(navHostController = navHostController) }
-        composable(NavRoute.Note.route){ NoteScreen(navHostController = navHostController) }
+        composable(NavRoute.Start.route){ StartScreen(navHostController = navHostController, mViewModel) }
+        composable(NavRoute.Main.route){ MainScreen(navHostController = navHostController, mViewModel) }
+        composable(NavRoute.Add.route){ AddScreen(navHostController = navHostController, mViewModel) }
+        composable(NavRoute.Note.route){ NoteScreen(navHostController = navHostController, mViewModel) }
 
     }
 }

@@ -1,6 +1,6 @@
 package ua.mykyklymenko.mnotes.screens
 
-import android.app.Application
+import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -10,28 +10,24 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import ua.mykyklymenko.mnotes.MainViewModel
-import ua.mykyklymenko.mnotes.MainViewModelFactory
-import ua.mykyklymenko.mnotes.model.Note
 import ua.mykyklymenko.mnotes.navigation.NavRoute
 import ua.mykyklymenko.mnotes.ui.theme.LightGray
 import ua.mykyklymenko.mnotes.ui.uielements.NoteCard
 
 
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun MainScreen(navHostController: NavHostController) {
-    val context = LocalContext.current
-    val mViewModel: MainViewModel =
-        viewModel(factory = MainViewModelFactory(context.applicationContext as Application))
+fun MainScreen(
+    navHostController: NavHostController,
+    mViewModel: MainViewModel
+) {
 
-    val notes = mViewModel.readTest.observeAsState(listOf()).value
-
-
+    val notes = mViewModel.radAllNotes().observeAsState(listOf()).value
 
     Scaffold(
         floatingActionButton = {
@@ -61,5 +57,5 @@ fun MainScreen(navHostController: NavHostController) {
 @Preview(showSystemUi = true)
 @Composable
 fun MainPreview() {
-    MainScreen(navHostController = rememberNavController())
+    MainScreen(navHostController = rememberNavController(), viewModel())
 }

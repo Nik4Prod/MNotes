@@ -21,18 +21,26 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import ua.mykyklymenko.mnotes.MainViewModel
+import ua.mykyklymenko.mnotes.model.Note
 import ua.mykyklymenko.mnotes.navigation.NavRoute
 
 
 @Composable
-fun AddScreen(navHostController: NavHostController) {
+fun AddScreen(
+    navHostController: NavHostController,
+    mViewModel: MainViewModel
+) {
 
     var title by remember { mutableStateOf("") }
     var subtitle by remember { mutableStateOf("") }
 
     val focusManager = LocalFocusManager.current
+    var isButtonEnabled by remember { mutableStateOf(false) }
+
 
     Scaffold() {
         Column(
@@ -51,19 +59,33 @@ fun AddScreen(navHostController: NavHostController) {
             )
             OutlinedTextField(
                 value = title,
-                onValueChange = { title = it },
+                onValueChange = {
+                    title = it
+                    isButtonEnabled = title.isNotEmpty() && subtitle.isNotEmpty()
+                },
                 label = { Text(text = "Tittle") },
+                isError = title.isEmpty(),
                 keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
                 keyboardActions = KeyboardActions( onNext = {focusManager.moveFocus(FocusDirection.Down)})
             )
             OutlinedTextField(
                 value = subtitle,
-                onValueChange = { subtitle = it },
-                label = { Text(text = "Subtitle") }
+                onValueChange = {
+                    subtitle = it
+                    isButtonEnabled = title.isNotEmpty() && subtitle.isNotEmpty()
+                },
+                label = { Text(text = "Subtitle") },
+                isError = subtitle.isEmpty()
             )
             Button(
-                onClick = { navHostController.navigate(NavRoute.Main.route) },
-                modifier = Modifier.padding(top = 16.dp)
+                modifier = Modifier.padding(top = 16.dp),
+                enabled = isButtonEnabled,
+                onClick = {
+                    mViewModel.addNote(note = Note(title = title, subtitle = subtitle)){
+                        navHostController.navigate(NavRoute.Main.route)
+                    }
+                },
+
             ) {
                 Text(text = "Add note")
             }
@@ -74,5 +96,5 @@ fun AddScreen(navHostController: NavHostController) {
 @Preview
 @Composable
 fun AddPreview() {
-    AddScreen(navHostController = rememberNavController())
+    AddScreen(navHostController = rememberNavController(), viewModel())
 }

@@ -17,15 +17,20 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import ua.mykyklymenko.mnotes.MainViewModel
 import ua.mykyklymenko.mnotes.navigation.NavRoute
 import ua.mykyklymenko.mnotes.ui.theme.LightGray
 import ua.mykyklymenko.mnotes.ui.uielements.NoteCard
 
 
 @Composable
-fun NoteScreen(navHostController: NavHostController) {
+fun NoteScreen(
+    navHostController: NavHostController,
+    mViewModel: MainViewModel
+) {
     Scaffold(
         topBar = {
             TopAppBar(title = {
@@ -75,5 +80,5 @@ fun NoteScreen(navHostController: NavHostController) {
 @Preview
 @Composable
 fun NotePreview() {
-    NoteScreen(navHostController = rememberNavController())
+    NoteScreen(navHostController = rememberNavController(), viewModel())
 }

@@ -1,5 +1,6 @@
 package ua.mykyklymenko.mnotes
 
+import android.app.Application
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -10,9 +11,11 @@ import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import ua.mykyklymenko.mnotes.navigation.NotesNavHost
 import ua.mykyklymenko.mnotes.ui.theme.DarkGray
 import ua.mykyklymenko.mnotes.ui.theme.LightGray
@@ -23,8 +26,10 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            NotesNavHost()
             NotesTheme {
+                val context = LocalContext.current
+                val mViewModel: MainViewModel =
+                    viewModel(factory = MainViewModelFactory(context.applicationContext as Application))
                 // A surface container using the 'background' color from the theme
                 Scaffold(
                     topBar = {
@@ -48,7 +53,7 @@ class MainActivity : ComponentActivity() {
                         modifier = Modifier.fillMaxSize().padding(padding),
                         color = MaterialTheme.colors.background
                     ) {
-                        NotesNavHost()
+                        NotesNavHost(mViewModel)
                     }
                 }
                 )

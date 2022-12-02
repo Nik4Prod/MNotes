@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "263483289021",
+    "project_id": "mnote-app",
+    "storage_bucket": "mnote-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:263483289021:android:c4e5c455cbd1f8c57fb6d4",
+        "android_client_info": {
+          "package_name": "ua.mykyklymenko.mnotes"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "263483289021-nng4ff2acl7an5shstqfcpgc43v5k7sn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDImCCwG6IHTnmmCuSezQ2Hvg6Vw5nquzU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "263483289021-nng4ff2acl7an5shstqfcpgc43v5k7sn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

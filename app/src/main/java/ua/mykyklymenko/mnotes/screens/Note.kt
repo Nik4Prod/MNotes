@@ -62,7 +62,6 @@ fun NoteScreen(
                     Column(modifier = Modifier
                         .fillMaxWidth()
                         .padding(32.dp)) {
-
                         ChangeNote(title = note.title, subtitle = note.subtitle, onConfirmClicked = { title, subtitle ->
                             mViewModel.updateNote(note = Note(id = note.id,title = title, subtitle = subtitle)){
                                 coroutinesScope.launch {
@@ -102,7 +101,7 @@ fun NoteScreen(
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.Center
                     ) {
-                        Card(
+                        Surface(
                             modifier = Modifier
                                 .fillMaxSize()
                                 .padding(32.dp)

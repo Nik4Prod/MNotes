@@ -82,7 +82,10 @@ fun ChangeNote(
         Button(
             modifier = Modifier.padding(top = 16.dp),
             enabled = isButtonEnabled,
-            onClick = { onConfirmClicked(titleVal,subtitleVal) },
+            onClick = {
+                keyboardController?.hide()
+                onConfirmClicked(titleVal,subtitleVal)
+            },
             ) {
             Text(text = confirmText)
         }

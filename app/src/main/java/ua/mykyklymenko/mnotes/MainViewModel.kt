@@ -17,6 +17,14 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
 
     private val context = application
 
+    private var currentNote: Note = Note(title = "", subtitle = "")
+
+    fun pullNote(): Note = currentNote
+    fun pushNote(note: Note){
+        currentNote = note
+    }
+
+
     fun initDatabase(type: String, onSuccess: ()-> Unit){
         Log.d("check Data", "MainViewModel init database with type: $type")
         when(type){
@@ -38,7 +46,30 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
         }
     }
 
+    fun updateNote(note: Note, onSuccess: () -> Unit){
+        viewModelScope.launch(Dispatchers.IO){
+            REPOSITORY.update(note = note){
+                viewModelScope.launch(Dispatchers.Main){
+                    onSuccess()
+                }
+            }
+        }
+    }
+    fun deleteNote(note: Note, onSuccess: () -> Unit){
+        viewModelScope.launch(Dispatchers.IO){
+            REPOSITORY.delete(note = note){
+                viewModelScope.launch(Dispatchers.Main){
+                    onSuccess()
+                }
+            }
+        }
+    }
+
+
+
     fun radAllNotes() = REPOSITORY.readAll
+
+
 
 }
 

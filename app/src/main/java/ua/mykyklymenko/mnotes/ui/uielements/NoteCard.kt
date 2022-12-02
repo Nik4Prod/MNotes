@@ -1,9 +1,8 @@
 package ua.mykyklymenko.mnotes.ui.uielements
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
+import androidx.compose.material.Button
 import androidx.compose.material.Card
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -19,7 +18,7 @@ import ua.mykyklymenko.mnotes.navigation.NavRoute
 @Composable
 fun NoteCard(
     note: Note,
-    navHostController: NavHostController
+    onNoteClicked: () -> Unit = {}
 
 ) {
     Card(
@@ -27,7 +26,7 @@ fun NoteCard(
             .fillMaxWidth()
             .padding(vertical = 4.dp, horizontal = 24.dp)
             .clickable {
-                navHostController.navigate(NavRoute.Note.route)
+                onNoteClicked()
             },
         elevation = 6.dp
     ) {
@@ -43,7 +42,6 @@ fun NoteCard(
             )
             Text(text = note.subtitle)
         }
-
     }
 }
 

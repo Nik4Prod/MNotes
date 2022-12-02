@@ -1,6 +1,7 @@
 package ua.mykyklymenko.mnotes.screens
 
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -20,7 +21,7 @@ import ua.mykyklymenko.mnotes.ui.theme.LightGray
 import ua.mykyklymenko.mnotes.ui.uielements.NoteCard
 
 
-@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
+
 @Composable
 fun MainScreen(
     navHostController: NavHostController,
@@ -47,7 +48,15 @@ fun MainScreen(
             modifier = Modifier.padding(it)
         ){
             items(notes){ note ->
-                NoteCard(note = note, navHostController = navHostController)
+                NoteCard(
+                    note = note,
+                    onNoteClicked = {
+                        mViewModel.pushNote(note)
+                        navHostController.navigate(NavRoute.Note.route)
+
+
+                    }
+                )
             }
         }
 

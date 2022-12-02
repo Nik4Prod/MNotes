@@ -27,6 +27,9 @@ import androidx.navigation.compose.rememberNavController
 import ua.mykyklymenko.mnotes.MainViewModel
 import ua.mykyklymenko.mnotes.model.Note
 import ua.mykyklymenko.mnotes.navigation.NavRoute
+import ua.mykyklymenko.mnotes.ui.uielements.ChangeNote
+import ua.mykyklymenko.mnotes.utils.Constants.Keys.NOTE_SUBTITLE
+import ua.mykyklymenko.mnotes.utils.Constants.Keys.NOTE_TITLE
 
 
 @Composable
@@ -35,63 +38,16 @@ fun AddScreen(
     mViewModel: MainViewModel
 ) {
 
-    var title by remember { mutableStateOf("") }
-    var subtitle by remember { mutableStateOf("") }
-
-    val focusManager = LocalFocusManager.current
-    var isButtonEnabled by remember { mutableStateOf(false) }
-
-
-    Scaffold() {
-        Column(
-            modifier = Modifier
-                .padding(it)
-                .fillMaxSize(),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Text(
-                text = "Add new note",
-                fontSize = 18.sp,
-                fontWeight = FontWeight.Bold,
-                modifier = Modifier.padding(8.dp),
-                textAlign = TextAlign.Center
-            )
-            OutlinedTextField(
-                value = title,
-                onValueChange = {
-                    title = it
-                    isButtonEnabled = title.isNotEmpty() && subtitle.isNotEmpty()
-                },
-                label = { Text(text = "Tittle") },
-                isError = title.isEmpty(),
-                keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
-                keyboardActions = KeyboardActions( onNext = {focusManager.moveFocus(FocusDirection.Down)})
-            )
-            OutlinedTextField(
-                value = subtitle,
-                onValueChange = {
-                    subtitle = it
-                    isButtonEnabled = title.isNotEmpty() && subtitle.isNotEmpty()
-                },
-                label = { Text(text = "Subtitle") },
-                isError = subtitle.isEmpty()
-            )
-            Button(
-                modifier = Modifier.padding(top = 16.dp),
-                enabled = isButtonEnabled,
-                onClick = {
-                    mViewModel.addNote(note = Note(title = title, subtitle = subtitle)){
-                        navHostController.popBackStack()
-                        navHostController.navigate(NavRoute.Main.route)
-                    }
-                },
-
-            ) {
-                Text(text = "Add note")
+    ChangeNote(
+        confirmText = "Add note",
+        onConfirmClicked = { title, subtitle ->
+            mViewModel.addNote(note = Note(title = title, subtitle = subtitle)) {
+                navHostController.popBackStack()
+                navHostController.navigate(NavRoute.Main.route)
             }
         }
-    }
+    )
+
 }
 
 @Preview

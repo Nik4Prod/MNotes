@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.lifecycle.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import ua.mykyklymenko.mnotes.database.firebase.FirebaseRepository
 import ua.mykyklymenko.mnotes.database.room.AppRoomDatabase
 import ua.mykyklymenko.mnotes.database.room.repository.RoomRepository
 import ua.mykyklymenko.mnotes.model.Note
@@ -32,6 +33,14 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
                 val dao = AppRoomDatabase.getInstance(context = context).getRoomDao()
                 REPOSITORY = RoomRepository(dao)
                 onSuccess()
+            }
+            TYPE_FIREBASE->{
+                REPOSITORY = FirebaseRepository()
+                REPOSITORY.connectToDatabase(
+                    onSuccess = { onSuccess() },
+                    onFail = { Log.d("Firebase Auth", it) }
+                )
+
             }
         }
     }

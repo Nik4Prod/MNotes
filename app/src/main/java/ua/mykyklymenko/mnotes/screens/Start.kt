@@ -53,7 +53,10 @@ fun StartScreen(
                         onConfirmClicked = { login,password->
                             LOGIN = login
                             PASSWORD = password
-                            mViewModel.initDatabase(TYPE_FIREBASE){}
+                            mViewModel.initDatabase(TYPE_FIREBASE){
+                                navHostController.popBackStack()
+                                navHostController.navigate(NavRoute.Main.route)
+                            }
                     })
                 }
             }

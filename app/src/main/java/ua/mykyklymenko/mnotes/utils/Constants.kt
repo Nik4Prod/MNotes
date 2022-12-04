@@ -5,10 +5,13 @@ import ua.mykyklymenko.mnotes.database.DatabaseRepository
 const val TYPE_DATABASE = "type_database"
 const val TYPE_ROOM = "type_room"
 const val TYPE_FIREBASE = "type_firebase"
+const val FIREBASE_ID = "firebaseID"
+const val FIREBASE_REGION = "europe-west1"
 
 lateinit var REPOSITORY: DatabaseRepository
 lateinit var LOGIN: String
 lateinit var PASSWORD: String
+
 
 object Constants{
     object Keys{
@@ -16,6 +19,8 @@ object Constants{
         const val NOTE_TABLE = "notes_table"
         const val NOTE_TITLE = "Title"
         const val NOTE_SUBTITLE = "Subtitle"
+        const val TITLE = "title"
+        const val SUBTITLE = "subtitle"
         const val ADD_NEW_NOTE = "Add new note"
         const val LOGGING = "Log In"
         const val NOTE_ID = "Id"

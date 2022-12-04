@@ -39,7 +39,6 @@ import ua.mykyklymenko.mnotes.utils.Constants.Keys.UPDATE
 fun NoteScreen(
     navHostController: NavHostController,
     mViewModel: MainViewModel
-
 ) {
 
 

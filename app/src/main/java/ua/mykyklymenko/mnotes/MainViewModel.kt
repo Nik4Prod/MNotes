@@ -5,7 +5,7 @@ import android.util.Log
 import androidx.lifecycle.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import ua.mykyklymenko.mnotes.database.firebase.FirebaseRepository
+import ua.mykyklymenko.mnotes.model.firebase.FirebaseRepository
 import ua.mykyklymenko.mnotes.database.room.AppRoomDatabase
 import ua.mykyklymenko.mnotes.database.room.repository.RoomRepository
 import ua.mykyklymenko.mnotes.model.Note

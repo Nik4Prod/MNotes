@@ -54,7 +54,7 @@ fun StartScreen(
                             LOGIN = login
                             PASSWORD = password
                             mViewModel.initDatabase(TYPE_FIREBASE){
-                                navHostController.popBackStack()
+
                                 navHostController.navigate(NavRoute.Main.route)
                             }
                     })
@@ -72,7 +72,7 @@ fun StartScreen(
                     Button(
                         onClick = {
                             mViewModel.initDatabase(TYPE_ROOM){
-                                navHostController.popBackStack()
+
                                 navHostController.navigate(NavRoute.Main.route)
                             }
                         },

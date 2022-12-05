@@ -9,10 +9,7 @@ import ua.mykyklymenko.mnotes.model.firebase.FirebaseRepository
 import ua.mykyklymenko.mnotes.database.room.AppRoomDatabase
 import ua.mykyklymenko.mnotes.database.room.repository.RoomRepository
 import ua.mykyklymenko.mnotes.model.Note
-import ua.mykyklymenko.mnotes.utils.REPOSITORY
-import ua.mykyklymenko.mnotes.utils.TYPE_DATABASE
-import ua.mykyklymenko.mnotes.utils.TYPE_FIREBASE
-import ua.mykyklymenko.mnotes.utils.TYPE_ROOM
+import ua.mykyklymenko.mnotes.utils.*
 
 class MainViewModel(application: Application): AndroidViewModel(application) {
 
@@ -23,6 +20,7 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
     fun pullNote(): Note = currentNote
     fun pushNote(note: Note){
         currentNote = note
+        Log.d("PushMethod", "Pushed note:$note")
     }
 
 
@@ -32,12 +30,16 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
             TYPE_ROOM ->{
                 val dao = AppRoomDatabase.getInstance(context = context).getRoomDao()
                 REPOSITORY = RoomRepository(dao)
+                DB_TYPE = TYPE_ROOM
                 onSuccess()
             }
             TYPE_FIREBASE->{
                 REPOSITORY = FirebaseRepository()
                 REPOSITORY.connectToDatabase(
-                    onSuccess = { onSuccess() },
+                    onSuccess = {
+                        DB_TYPE = TYPE_FIREBASE
+                        onSuccess()
+                    },
                     onFail = { Log.d("Firebase Auth", it) }
                 )
 

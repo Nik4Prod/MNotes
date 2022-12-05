@@ -19,7 +19,9 @@ import ua.mykyklymenko.mnotes.MainViewModel
 import ua.mykyklymenko.mnotes.navigation.NavRoute
 import ua.mykyklymenko.mnotes.ui.theme.LightGray
 import ua.mykyklymenko.mnotes.ui.uielements.NoteCard
-
+import ua.mykyklymenko.mnotes.utils.DB_TYPE
+import ua.mykyklymenko.mnotes.utils.TYPE_FIREBASE
+import ua.mykyklymenko.mnotes.utils.TYPE_ROOM
 
 
 @Composable
@@ -28,8 +30,11 @@ fun MainScreen(
     mViewModel: MainViewModel
 ) {
 
-    val notes = mViewModel.radAllNotes().observeAsState(listOf()).value
-
+    val notes = when(DB_TYPE){
+        TYPE_ROOM -> mViewModel.radAllNotes().observeAsState(listOf()).value
+        TYPE_FIREBASE -> mViewModel.radAllNotes().observeAsState(listOf()).value
+        else -> emptyList()
+    }
     Scaffold(
         floatingActionButton = {
             FloatingActionButton(
@@ -53,7 +58,6 @@ fun MainScreen(
                     onNoteClicked = {
                         mViewModel.pushNote(note)
                         navHostController.navigate(NavRoute.Note.route)
-
 
                     }
                 )

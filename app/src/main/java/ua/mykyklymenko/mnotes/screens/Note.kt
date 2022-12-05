@@ -1,6 +1,5 @@
 package ua.mykyklymenko.mnotes.screens
 
-import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -8,14 +7,11 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.*
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
@@ -26,12 +22,11 @@ import ua.mykyklymenko.mnotes.navigation.NavRoute
 import ua.mykyklymenko.mnotes.ui.theme.LightGray
 import ua.mykyklymenko.mnotes.ui.uielements.ChangeNote
 import ua.mykyklymenko.mnotes.ui.uielements.NoteCard
-import ua.mykyklymenko.mnotes.utils.Constants
 import ua.mykyklymenko.mnotes.utils.Constants.Keys.DELETE
-import ua.mykyklymenko.mnotes.utils.Constants.Keys.NONE
-import ua.mykyklymenko.mnotes.utils.Constants.Keys.NOTE_SUBTITLE
-import ua.mykyklymenko.mnotes.utils.Constants.Keys.NOTE_TITLE
 import ua.mykyklymenko.mnotes.utils.Constants.Keys.UPDATE
+import ua.mykyklymenko.mnotes.utils.DB_TYPE
+import ua.mykyklymenko.mnotes.utils.TYPE_FIREBASE
+import ua.mykyklymenko.mnotes.utils.TYPE_ROOM
 
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -50,6 +45,7 @@ fun NoteScreen(
     }
     val scaffoldState = rememberScaffoldState()
 
+
     Scaffold(scaffoldState = scaffoldState, ) {
         ModalBottomSheetLayout(
             modifier = Modifier.padding(it),
@@ -62,12 +58,19 @@ fun NoteScreen(
                         .fillMaxWidth()
                         .padding(32.dp)) {
                         ChangeNote(title = note.title, subtitle = note.subtitle, onConfirmClicked = { title, subtitle ->
-                            mViewModel.updateNote(note = Note(id = note.id,title = title, subtitle = subtitle)){
+
+                            val noteUpdated = when(DB_TYPE){
+                                TYPE_ROOM -> Note(id = note.id,title = title, subtitle = subtitle)
+                                TYPE_FIREBASE -> Note(firebaseId = note.firebaseId,title = title, subtitle = subtitle)
+                                else -> mViewModel.pullNote()
+                            }
+
+                            mViewModel.updateNote(note = noteUpdated){
                                 coroutinesScope.launch {
                                     bottomSheetState.hide()
                                 }
                             }
-                            mViewModel.pushNote(Note(id = note.id,title = title, subtitle = subtitle))
+                            mViewModel.pushNote(noteUpdated)
                             note = mViewModel.pullNote()
                         })
                     }
@@ -131,12 +134,12 @@ fun NoteScreen(
                                         modifier = Modifier.padding(top = 16.dp),
                                         onClick = {
                                             coroutinesScope.launch {
-                                            
-                                                val snackbarResult = scaffoldState.snackbarHostState.showSnackbar(
+
+                                                val snackBarResult = scaffoldState.snackbarHostState.showSnackbar(
                                                     message = "All information about this note will be erased",
                                                     actionLabel = "Delete"
                                                 )
-                                                when(snackbarResult){
+                                                when(snackBarResult){
                                                     SnackbarResult.ActionPerformed -> {
                                                         mViewModel.deleteNote(note){
                                                             navHostController.popBackStack()

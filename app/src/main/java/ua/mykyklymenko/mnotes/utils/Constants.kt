@@ -6,11 +6,14 @@ const val TYPE_DATABASE = "type_database"
 const val TYPE_ROOM = "type_room"
 const val TYPE_FIREBASE = "type_firebase"
 const val FIREBASE_ID = "firebaseID"
-const val FIREBASE_REGION = "europe-west1"
+const val FIREBASE_DATABASE_URL = "https://mnote-app-default-rtdb.europe-west1.firebasedatabase.app/"
+const val DEBUG_TAG = "Debug"
+
 
 lateinit var REPOSITORY: DatabaseRepository
 lateinit var LOGIN: String
 lateinit var PASSWORD: String
+lateinit var DB_TYPE: String
 
 
 object Constants{

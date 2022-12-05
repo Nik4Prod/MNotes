@@ -27,13 +27,15 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import ua.mykyklymenko.mnotes.utils.Constants
 import ua.mykyklymenko.mnotes.utils.Constants.Keys.LOGGING
+import ua.mykyklymenko.mnotes.utils.LOGIN
+import ua.mykyklymenko.mnotes.utils.PASSWORD
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun Logging(
     modifier: Modifier = Modifier,
-    login: String = "",
-    password: String = "",
+    login: String = LOGIN,
+    password: String = PASSWORD,
     confirmText: String = "Confirm",
     onConfirmClicked: (String,String) -> Unit = {_,_-> }
 ) {
@@ -41,7 +43,7 @@ fun Logging(
     var passwordVal by remember { mutableStateOf(password) }
 
     val focusManager = LocalFocusManager.current
-    var isButtonEnabled by remember { mutableStateOf(false) }
+    var isButtonEnabled by remember { mutableStateOf(LOGGING.isNotEmpty() && PASSWORD.isNotEmpty()) }
 
     val keyboardController = LocalSoftwareKeyboardController.current
 

@@ -5,7 +5,7 @@ import android.util.Log
 import androidx.lifecycle.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import ua.mykyklymenko.mnotes.model.firebase.FirebaseRepository
+import ua.mykyklymenko.mnotes.database.firebase.FirebaseRepository
 import ua.mykyklymenko.mnotes.database.room.AppRoomDatabase
 import ua.mykyklymenko.mnotes.database.room.repository.RoomRepository
 import ua.mykyklymenko.mnotes.model.Note
@@ -25,7 +25,7 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
 
 
     fun initDatabase(type: String, onSuccess: ()-> Unit){
-        Log.d("check Data", "MainViewModel init database with type: $type")
+        Log.d(DEBUG_TAG, "MainViewModel:  init database with type: $type")
         when(type){
             TYPE_ROOM ->{
                 val dao = AppRoomDatabase.getInstance(context = context).getRoomDao()
@@ -40,7 +40,9 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
                         DB_TYPE = TYPE_FIREBASE
                         onSuccess()
                     },
-                    onFail = { Log.d("Firebase Auth", it) }
+                    onFail = {
+                        Log.d("Firebase Auth", it)
+                    }
                 )
 
             }
@@ -76,19 +78,19 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
         }
     }
 
+    fun signOut(onSuccess: () -> Unit){
+        when(DB_TYPE){
+            TYPE_FIREBASE,TYPE_ROOM -> {
+                REPOSITORY.signOut()
+                DB_TYPE = ""
+                onSuccess()
+            }
+        }
+    }
 
 
     fun radAllNotes() = REPOSITORY.readAll
 
 
 
-}
-
-class MainViewModelFactory(private val application: Application): ViewModelProvider.Factory{
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(MainViewModel::class.java)){
-            return MainViewModel(application = application) as T
-        }
-        throw java.lang.IllegalArgumentException("Unknown ViewModel Class")
-    }
 }

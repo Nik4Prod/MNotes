@@ -1,7 +1,5 @@
 package ua.mykyklymenko.mnotes.screens
 
-import android.app.Application
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
@@ -9,7 +7,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -17,10 +14,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import kotlinx.coroutines.launch
 import ua.mykyklymenko.mnotes.MainViewModel
-import ua.mykyklymenko.mnotes.MainViewModelFactory
-import ua.mykyklymenko.mnotes.model.Note
 import ua.mykyklymenko.mnotes.navigation.NavRoute
-import ua.mykyklymenko.mnotes.ui.uielements.ChangeNote
 import ua.mykyklymenko.mnotes.ui.uielements.Logging
 import ua.mykyklymenko.mnotes.utils.LOGIN
 import ua.mykyklymenko.mnotes.utils.PASSWORD
@@ -54,7 +48,7 @@ fun StartScreen(
                             LOGIN = login
                             PASSWORD = password
                             mViewModel.initDatabase(TYPE_FIREBASE){
-
+                                mViewModel.radAllNotes()
                                 navHostController.navigate(NavRoute.Main.route)
                             }
                     })
@@ -72,7 +66,6 @@ fun StartScreen(
                     Button(
                         onClick = {
                             mViewModel.initDatabase(TYPE_ROOM){
-
                                 navHostController.navigate(NavRoute.Main.route)
                             }
                         },

@@ -1,4 +1,4 @@
-package ua.mykyklymenko.mnotes.model.firebase
+package ua.mykyklymenko.mnotes.database.firebase
 
 import android.util.Log
 import androidx.lifecycle.LiveData
@@ -10,6 +10,7 @@ import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import ua.mykyklymenko.mnotes.model.Note
 import ua.mykyklymenko.mnotes.navigation.NavRoute
+import ua.mykyklymenko.mnotes.utils.DEBUG_TAG
 import ua.mykyklymenko.mnotes.utils.FIREBASE_DATABASE_URL
 
 class AllNotesLiveData: LiveData<List<Note>>() {
@@ -35,7 +36,9 @@ class AllNotesLiveData: LiveData<List<Note>>() {
             value = notes
         }
 
-        override fun onCancelled(error: DatabaseError) {}
+        override fun onCancelled(error: DatabaseError) {
+            Log.d(DEBUG_TAG, "Has some problems with loading the base: $error ")
+        }
     }
 
     override fun onActive() {

@@ -1,5 +1,8 @@
 package ua.mykyklymenko.mnotes.utils
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import ua.mykyklymenko.mnotes.database.DatabaseRepository
 
 const val TYPE_DATABASE = "type_database"
@@ -11,9 +14,10 @@ const val DEBUG_TAG = "Debug"
 
 
 lateinit var REPOSITORY: DatabaseRepository
-lateinit var LOGIN: String
-lateinit var PASSWORD: String
-lateinit var DB_TYPE: String
+var LOGIN: String = ""
+var PASSWORD: String = ""
+var USER_ID: String = ""
+var DB_TYPE by mutableStateOf("")
 
 
 object Constants{
@@ -30,7 +34,6 @@ object Constants{
         const val NONE = "None"
         const val UPDATE = "Update"
         const val DELETE = "Delete"
-        const val LOGIN = "Login"
         const val YOUR_LOGIN = "Your email"
         const val PASSWORD = "Password"
         const val YOUR_PASSWORD = "Your password"

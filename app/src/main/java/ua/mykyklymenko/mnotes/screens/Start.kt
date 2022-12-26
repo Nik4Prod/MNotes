@@ -7,6 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -14,6 +15,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import kotlinx.coroutines.launch
 import ua.mykyklymenko.mnotes.MainViewModel
+import ua.mykyklymenko.mnotes.R
 import ua.mykyklymenko.mnotes.navigation.NavRoute
 import ua.mykyklymenko.mnotes.ui.uielements.Logging
 import ua.mykyklymenko.mnotes.utils.LOGIN
@@ -43,7 +45,7 @@ fun StartScreen(
                 Column(modifier = Modifier
                     .fillMaxWidth()
                     .padding(32.dp)) {
-                    Logging(confirmText = "Log In",
+                    Logging(confirmText = stringResource(id = R.string.logging_in),
                         onConfirmClicked = { login,password->
                             LOGIN = login
                             PASSWORD = password
@@ -62,7 +64,7 @@ fun StartScreen(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Center
                 ) {
-                    Text(text = "What will we use?")
+                    Text(text = stringResource(id = R.string.database_ask))
                     Button(
                         onClick = {
                             mViewModel.initDatabase(TYPE_ROOM){
@@ -73,7 +75,7 @@ fun StartScreen(
                             .width(200.dp)
                             .padding(vertical = 8.dp)
                     ) {
-                        Text(text = "Room database")
+                        Text(text = stringResource(id = R.string.database_room))
                     }
                     Button(
                         onClick = {
@@ -85,7 +87,7 @@ fun StartScreen(
                             .width(200.dp)
                             .padding(vertical = 8.dp)
                     ) {
-                        Text(text = "Firebase database")
+                        Text(text = stringResource(id = R.string.database_firebase))
                     }
                 }
             }

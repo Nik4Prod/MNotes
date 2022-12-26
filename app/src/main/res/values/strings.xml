@@ -12,4 +12,8 @@
     <string name="your_login">Your email</string>
     <string name="password">Password</string>
     <string name="your_password"> Your password</string>
+    <string name="database_ask">What will we use?</string>
+    <string name="database_room">Room database</string>
+    <string name="database_firebase">Firebase database</string>
+    <string name="all_info_will_erased">All information about this note will be erased</string>
 </resources>

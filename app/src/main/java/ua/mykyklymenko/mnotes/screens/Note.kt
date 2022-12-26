@@ -10,6 +10,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -17,6 +18,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import kotlinx.coroutines.launch
 import ua.mykyklymenko.mnotes.MainViewModel
+import ua.mykyklymenko.mnotes.R
 import ua.mykyklymenko.mnotes.model.Note
 import ua.mykyklymenko.mnotes.navigation.NavRoute
 import ua.mykyklymenko.mnotes.ui.theme.LightGray
@@ -36,6 +38,8 @@ fun NoteScreen(
     mViewModel: MainViewModel
 ) {
 
+    val message = stringResource(id = R.string.all_info_will_erased)
+    val deleteMessage = stringResource(id = R.string.delete)
 
     val bottomSheetState = rememberModalBottomSheetState(ModalBottomSheetValue.Hidden)
     val coroutinesScope = rememberCoroutineScope()
@@ -133,11 +137,12 @@ fun NoteScreen(
                                     Button(
                                         modifier = Modifier.padding(top = 16.dp),
                                         onClick = {
+
                                             coroutinesScope.launch {
 
                                                 val snackBarResult = scaffoldState.snackbarHostState.showSnackbar(
-                                                    message = "All information about this note will be erased",
-                                                    actionLabel = "Delete"
+                                                    message = message,
+                                                    actionLabel = deleteMessage
                                                 )
                                                 when(snackBarResult){
                                                     SnackbarResult.ActionPerformed -> {

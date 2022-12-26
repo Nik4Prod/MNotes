@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">MNotes</string>
+    <string name="note_database">notes_database</string>
+    <string name="note_table">notes_table</string>
+    <string name="title">title</string>
+    <string name="subtitle">subtitle</string>
+    <string name="add_new_note">Add new note</string>
+    <string name="logging_in">Log In</string>
+    <string name="note_id">Id</string>
+    <string name="update">Update</string>
+    <string name="delete">Delete</string>
+    <string name="your_login">Your email</string>
+    <string name="password">Password</string>
+    <string name="your_password"> Your password</string>
 </resources>

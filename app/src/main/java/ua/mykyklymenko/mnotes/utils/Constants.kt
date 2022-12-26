@@ -30,8 +30,6 @@ object Constants{
         const val SUBTITLE = "subtitle"
         const val ADD_NEW_NOTE = "Add new note"
         const val LOGGING = "Log In"
-        const val NOTE_ID = "Id"
-        const val NONE = "None"
         const val UPDATE = "Update"
         const val DELETE = "Delete"
         const val YOUR_LOGIN = "Your email"

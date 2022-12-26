@@ -4,13 +4,13 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
+
 import ua.mykyklymenko.mnotes.MainViewModel
 import ua.mykyklymenko.mnotes.screens.AddScreen
 import ua.mykyklymenko.mnotes.screens.MainScreen
 import ua.mykyklymenko.mnotes.screens.NoteScreen
 import ua.mykyklymenko.mnotes.screens.StartScreen
-import ua.mykyklymenko.mnotes.utils.Constants.Keys.NOTE_ID
+
 import ua.mykyklymenko.mnotes.utils.Constants.Screens.ADD_SCREEN
 import ua.mykyklymenko.mnotes.utils.Constants.Screens.MAIN_SCREEN
 import ua.mykyklymenko.mnotes.utils.Constants.Screens.NOTE_SCREEN

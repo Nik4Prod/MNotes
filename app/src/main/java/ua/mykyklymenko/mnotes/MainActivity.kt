@@ -37,7 +37,6 @@ class MainActivity : ComponentActivity() {
                 val context = LocalContext.current
                 val mViewModel: MainViewModel = viewModel()
                 val navHostController = rememberNavController()
-                // A surface container using the 'background' color from the theme
                 Scaffold(
                     topBar = {
                         TopAppBar(
